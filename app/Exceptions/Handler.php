@@ -1,9 +1,21 @@
 <?php
 
 namespace App\Exceptions;
+<<<<<<< HEAD
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+=======
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
+
+use Illuminate\Auth\AuthenticationException;
+use Illuminate\Database\QueryException;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Throwable;
+use TypeError;
+>>>>>>> origin/auth
 
 class Handler extends ExceptionHandler
 {
@@ -27,4 +39,35 @@ class Handler extends ExceptionHandler
             //
         });
     }
+<<<<<<< HEAD
+=======
+
+    public function render($request, Throwable $exception)
+    {
+        if ($exception instanceof UnauthorizedHttpException) {
+            return response()->json([
+                'error' => 'Authentication failed',
+                'message' => 'Please provide a valid token',
+                'code' => 401
+            ], 401);
+        }
+        if ($exception instanceof TypeError) {
+            return CustomExceptions::typeError($exception)->render($request);
+        }
+        if ($exception instanceof ValidationException) {
+            return CustomExceptions::validationError($exception)->render($request);
+        }
+    
+        if ($exception instanceof AuthenticationException) {
+            return CustomExceptions::authenticationError($exception)->render($request);
+        }
+        if ($exception instanceof QueryException) {
+            return CustomExceptions::queryError($exception)->render($request);
+        }
+      
+        return parent::render($request, $exception);
+    }
+
+
+>>>>>>> origin/auth
 }
