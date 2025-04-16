@@ -17,10 +17,13 @@ use App\Http\Controllers\Api\CategoryController;
 |
 */
 
+
+
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
 require __DIR__.'/api/auth.php';
+
 
 
 Route::apiResource('/categories', CategoryController::class);

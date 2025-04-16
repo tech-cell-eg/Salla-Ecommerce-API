@@ -39,10 +39,19 @@ class AuthController extends ApiController
         $dto = LoginDTO::fromRequest($request->validated());
         $tokenDTO = $this->authService->login($dto);
 
-        return response()->json([
-            'user' => new UserResource(Auth::user()),
-            'token' => new TokenResource($tokenDTO)
-        ]);
+      
+        // return response()->json([
+        //     'user' => new UserResource(Auth::user()),
+        //     'token' => new TokenResource($tokenDTO)
+        // ]);
+        return ApiController::successResponse([
+            'data' => [
+                'user' => new UserResource(Auth::user()),
+                'token' => new TokenResource($tokenDTO)
+            ],
+            'message' => 'User registered successfully'
+        ], 201);
+
     }
 
     public function logout(): JsonResponse
