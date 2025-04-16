@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('slug')->unique();
             $table->string('small_desc');
             $table->longText('description');
             $table->boolean('status')->default(1);
@@ -28,7 +29,8 @@ return new class extends Migration
             $table->date('end_discount')->nullable();
 
             $table->boolean('manage_stock')->default(0);
-            $table->integer('quantity')->nullable();
+            $table->integer('quantity')->nullable()->comment('number of times the product has been purchased');
+            $table->integer('purchased')->nullable()->comment('number of times the product has been purchased');
             $table->boolean('available_in_stock')->default(1);
 
             $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');

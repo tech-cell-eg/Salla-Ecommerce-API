@@ -11,7 +11,8 @@
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
-        "guava/filament-icon-picker": "^2.0"
+        "guava/filament-icon-picker": "^2.0",
+        "cviebrock/eloquent-sluggable": "^10.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
@@ -37,12 +38,8 @@
     "scripts": {
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-<<<<<<< HEAD
             "@php artisan package:discover --ansi",
             "@php artisan filament:upgrade"
-=======
-            "@php artisan package:discover --ansi"
->>>>>>> origin/auth
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force"

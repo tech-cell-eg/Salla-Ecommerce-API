@@ -2,13 +2,14 @@
 
 namespace App\Filament\Resources;
 
-use App\Models\Product;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use App\Models\Product;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Filament\Resources\Resource;
 use App\Filament\Resources\ProductResource\Pages;
+use App\Filament\Resources\ProductResource\RelationManagers\TagsRelationManager;
 use App\Filament\Resources\ProductResource\RelationManagers\ImagesRelationManager;
 use App\Filament\Resources\ProductResource\RelationManagers\DetailsRelationManager;
 use App\Filament\Resources\ProductResource\RelationManagers\VariantsRelationManager;
@@ -45,6 +46,14 @@ class ProductResource extends Resource
                             ->required()
                             ->unique(Product::class, 'sku', ignoreRecord: true)
                             ->maxLength(255),
+                        Forms\Components\Select::make('category_id')
+                            ->relationship('category', 'name')
+                            ->required()
+                            ->searchable(),
+                        Forms\Components\Select::make('brand_id')
+                            ->relationship('brand', 'name')
+                            ->required()
+                            ->searchable(),
                     ])
                     ->columns(2),
 
@@ -55,8 +64,6 @@ class ProductResource extends Resource
                             ->default(false)
                             ->live()
                             ->columnSpanFull(),
-
-                        // Base price (shown when no variants exist)
                         Forms\Components\TextInput::make('price')
                             ->numeric()
                             ->prefix('$')
@@ -65,8 +72,44 @@ class ProductResource extends Resource
                             ->dehydrated(fn($get) => !$get('has_variants')),
                     ]),
 
-                // Other sections (Discount, Stock, Relations) remain the same
-                // ...
+                Forms\Components\Section::make('Discount')
+                    ->schema([
+                        Forms\Components\Toggle::make('has_discount')
+                            ->label('Has Discount')
+                            ->default(false)
+                            ->live(),
+                        Forms\Components\TextInput::make('discount')
+                            ->numeric()
+                            ->prefix('$')
+                            ->rules(['nullable', 'decimal:0,3'])
+                            ->visible(fn($get) => $get('has_discount')),
+                        Forms\Components\DatePicker::make('start_discount')
+                            ->label('Start Discount')
+                            ->nullable()
+                            ->visible(fn($get) => $get('has_discount')),
+                        Forms\Components\DatePicker::make('end_discount')
+                            ->label('End Discount')
+                            ->nullable()
+                            ->visible(fn($get) => $get('has_discount')),
+                    ])
+                    ->columns(2),
+
+                Forms\Components\Section::make('Stock Management')
+                    ->schema([
+                        Forms\Components\Toggle::make('manage_stock')
+                            ->label('Manage Stock')
+                            ->default(false)
+                            ->live(),
+                        Forms\Components\TextInput::make('quantity')
+                            ->numeric()
+                            ->rules(['nullable', 'integer'])
+                            ->visible(fn($get) => $get('manage_stock')),
+                        Forms\Components\Toggle::make('available_in_stock')
+                            ->label('Available in Stock')
+                            ->default(true)
+                            ->visible(fn($get) => $get('manage_stock')),
+                    ])
+                    ->columns(2),
             ]);
     }
 
@@ -83,9 +126,9 @@ class ProductResource extends Resource
                 Tables\Columns\TextColumn::make('brand.name')
                     ->label('Brand')
                     ->sortable(),
-                    Tables\Columns\TextColumn::make('price')
+                Tables\Columns\TextColumn::make('price')
                     ->label('Price')
-                    ->formatStateUsing(fn ($state, $record) => $record->has_variants ? 'Has variants' : \Number::currency($state, 'USD'))
+                    ->formatStateUsing(fn($state, $record) => $record->has_variants ? 'Has variants' : \Number::currency($state, 'USD'))
                     ->sortable()
                     ->description(fn($record) => $record->has_variants ? '(multiple variants)' : ''),
                 Tables\Columns\IconColumn::make('status')
@@ -113,6 +156,7 @@ class ProductResource extends Resource
             ImagesRelationManager::class,
             DetailsRelationManager::class,
             VariantsRelationManager::class,
+            TagsRelationManager::class,
         ];
     }
 
