@@ -1,11 +1,6 @@
 <?php
 
 namespace App\Exceptions;
-<<<<<<< HEAD
-
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Throwable;
-=======
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
@@ -13,9 +8,8 @@ use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\QueryException;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Throwable;
+use Throwable;  
 use TypeError;
->>>>>>> origin/auth
 
 class Handler extends ExceptionHandler
 {
@@ -39,8 +33,6 @@ class Handler extends ExceptionHandler
             //
         });
     }
-<<<<<<< HEAD
-=======
 
     public function render($request, Throwable $exception)
     {
@@ -69,5 +61,4 @@ class Handler extends ExceptionHandler
     }
 
 
->>>>>>> origin/auth
 }

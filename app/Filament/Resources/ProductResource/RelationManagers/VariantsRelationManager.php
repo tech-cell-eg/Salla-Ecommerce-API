@@ -21,12 +21,15 @@ class VariantsRelationManager extends RelationManager
                     ->numeric()
                     ->prefix('$')
                     ->required(),
-                
+
                 Forms\Components\TextInput::make('stock')
                     ->numeric()
                     ->minValue(0)
                     ->required(),
-                
+
+                Forms\Components\Checkbox::make('is_default')
+                    ->default(false),
+
                 Forms\Components\Select::make('attributeValues')
                     ->relationship('attributeValues', 'value')
                     ->multiple()
@@ -49,11 +52,15 @@ class VariantsRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('price')
                     ->money('usd')
                     ->sortable(),
-                
+
                 Tables\Columns\TextColumn::make('stock')
                     ->numeric()
                     ->sortable(),
-                
+
+                Tables\Columns\IconColumn::make('is_default')
+                    ->boolean()
+                    ->sortable(),
+
                 Tables\Columns\TextColumn::make('attributeValues.value')
                     ->badge()
                     ->listWithLineBreaks(),

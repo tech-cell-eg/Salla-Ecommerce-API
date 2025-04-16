@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('session_id');
             $table->foreignId('product_id')->constrained('products')->cascadeOnDelete();
             $table->integer('price')->comment('price of the product');
-            $table->integer('discounted_price')->nullable()->comment('will get the value of the course price when item added to cart and updated when coupon is applies');
-            $table->integer('quantity');
+            $table->integer('discounted_price')->nullable()->comment('will get the value of the product price when item added to cart and updated when coupon is applies');
+            $table->integer('quantity')->default(1);
             $table->timestamps();
         });
     }

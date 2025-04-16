@@ -25,20 +25,20 @@ class AuthController extends ApiController
         $dto = RegisterDTO::fromRequest($request->validated());
         $user = $this->authService->register($dto);
 
-     
+
 
         return ApiController::successResponse([
-            "data"=>new UserResource($user),
+            "data" => new UserResource($user),
             'message' => 'User registered successfully'
-        ],201);
+        ], 201);
     }
 
     public function login(LoginRequest $request): JsonResponse
     {
-        
+
         $dto = LoginDTO::fromRequest($request->validated());
         $tokenDTO = $this->authService->login($dto);
-      
+
         return response()->json([
             'user' => new UserResource(Auth::user()),
             'token' => new TokenResource($tokenDTO)
@@ -48,7 +48,7 @@ class AuthController extends ApiController
     public function logout(): JsonResponse
     {
         $this->authService->logout(auth()->user());
-       
+
 
         return response()->json([
             'message' => 'Successfully logged out'

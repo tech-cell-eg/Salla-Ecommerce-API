@@ -7,6 +7,8 @@ use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ImagesRelationManager extends RelationManager
 {
@@ -16,11 +18,12 @@ class ImagesRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Forms\Components\FileUpload::make('images')
+                Forms\Components\FileUpload::make('image') // Fixed field name
                     ->required()
                     ->image()
                     ->directory('tours')
-                    ->preserveFilenames(),
+                    ->preserveFilenames()
+                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/gif']),
             ]);
     }
 
@@ -35,8 +38,7 @@ class ImagesRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                // Tables\Actions\CreateAction::make(), // Default single upload
-                $this->bulkUploadAction(),           // Custom multi upload
+                $this->bulkUploadAction(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -55,16 +57,17 @@ class ImagesRelationManager extends RelationManager
             ->label('Upload Multiple Images')
             ->icon('heroicon-m-photo')
             ->form([
-                Forms\Components\FileUpload::make('images')
+                Forms\Components\FileUpload::make('image') // Fixed field name
                     ->label('Select Images')
                     ->multiple()
                     ->required()
                     ->image()
                     ->directory('tours')
-                    ->preserveFilenames(),
+                    ->preserveFilenames()
+                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/gif']),
             ])
             ->action(function (array $data): void {
-                foreach ($data['images'] as $imagePath) {
+                foreach ($data['image'] as $imagePath) { // Fixed array key
                     $this->ownerRecord->images()->create([
                         'image' => $imagePath,
                     ]);
