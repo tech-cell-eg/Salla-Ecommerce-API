@@ -22,7 +22,7 @@ class CartService
 
     public static function getCartData()
     {
-        return Cart::where('session_id', self::getCartId())->get();
+        return Cart::with('product')->where('session_id', self::getCartId())->get();
     }
 
     public static function deleteCart()
