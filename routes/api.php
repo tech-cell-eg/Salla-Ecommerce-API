@@ -27,5 +27,8 @@ require __DIR__.'/api/auth.php';
 
 
 Route::apiResource('/categories', CategoryController::class);
-Route::apiResource('/products', ProductController::class);
+//Route::apiResource('/products', ProductController::class);
+
+Route::get("/products/{id}",[ProductController::class,'show']);
+Route::get("/products",[ProductController::class,'index']);
 Route::apiResource('/carts', CartController::class);
