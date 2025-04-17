@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Exceptions;
+
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
@@ -10,6 +11,7 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;  
 use TypeError;
+
 
 class Handler extends ExceptionHandler
 {

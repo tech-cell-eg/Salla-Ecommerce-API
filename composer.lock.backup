@@ -4,7 +4,11 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d679b6c28fe23ac9a9618f9caf5719d5",
+<<<<<<< HEAD
+    "content-hash": "ff372aba1b546df79732d33701e8b3e5",
+=======
+    "content-hash": "964c63732c6401247c7a401c0d38a4bd",
+>>>>>>> 8b759e52357ae7ccf6c667166133d6ea6a8d448d
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -352,6 +356,8 @@
             "time": "2023-12-11T17:09:12+00:00"
         },
         {
+<<<<<<< HEAD
+=======
             "name": "cocur/slugify",
             "version": "v4.6.0",
             "source": {
@@ -498,6 +504,7 @@
             "time": "2023-02-16T23:01:35+00:00"
         },
         {
+>>>>>>> 8b759e52357ae7ccf6c667166133d6ea6a8d448d
             "name": "danharrin/date-format-converter",
             "version": "v0.3.1",
             "source": {
@@ -5338,6 +5345,7 @@
             "time": "2025-04-11T15:27:14+00:00"
         },
         {
+<<<<<<< HEAD
             "name": "spatie/laravel-permission",
             "version": "6.17.0",
             "source": {
@@ -5421,6 +5429,8 @@
             "time": "2025-04-08T15:06:14+00:00"
         },
         {
+=======
+>>>>>>> 8b759e52357ae7ccf6c667166133d6ea6a8d448d
             "name": "symfony/console",
             "version": "v6.4.20",
             "source": {
@@ -10435,12 +10445,20 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
+<<<<<<< HEAD
     "stability-flags": [],
+=======
+    "stability-flags": {},
+>>>>>>> 8b759e52357ae7ccf6c667166133d6ea6a8d448d
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": "^8.1"
     },
+<<<<<<< HEAD
     "platform-dev": [],
+=======
+    "platform-dev": {},
+>>>>>>> 8b759e52357ae7ccf6c667166133d6ea6a8d448d
     "plugin-api-version": "2.6.0"
 }

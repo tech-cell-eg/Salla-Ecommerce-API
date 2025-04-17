@@ -91,5 +91,13 @@ class DatabaseSeeder extends Seeder
 
         // Seed Features
         Feature::factory()->count(6)->create();
+        // \App\Models\User::factory()->create([
+        //     'name' => 'Test User',
+        //     'email' => 'test@example.com',
+        // ]);
+        $this->call([
+            RolePermissionSeeder::class,
+            AdminUserSeeder::class,
+        ]);
     }
 }
