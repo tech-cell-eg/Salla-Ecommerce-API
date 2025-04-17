@@ -18,9 +18,6 @@ return new class extends Migration
             $table->foreignId('product_id')->constrained('products')->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });
-        
-        
-       
     }
 
     /**
