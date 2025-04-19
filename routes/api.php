@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\CheckoutController;
+use App\Http\Controllers\Api\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,4 +33,8 @@ Route::apiResource('/categories', CategoryController::class);
 
 Route::get("/products/{id}",[ProductController::class,'show']);
 Route::get("/products",[ProductController::class,'index']);
+
+Route::post("checkout",[CheckoutController::class,'store'])->middleware('auth:sanctum');
+Route::get("orders/{id}",[OrderController::class,'show'])->middleware('auth:sanctum');
+
 Route::apiResource('/carts', CartController::class);

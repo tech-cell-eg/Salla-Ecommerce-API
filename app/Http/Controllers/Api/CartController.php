@@ -13,6 +13,7 @@ class CartController extends ApiController
 
     public function index()
     {
+        
         return ApiController::successResponse([
             "data" => CartResource::collection(CartService::getCartData()),
             'message' => 'Cart items fetched successfully'
@@ -31,11 +32,19 @@ class CartController extends ApiController
             'discounted_price' => $request->validated()['discounted_price']
         ]);
 
-        return response([
+
+        $response = response()->json([
             'status' => 'success',
             'message' => 'Product added to cart successfully',
             'cartItemsNumber' => Cart::where('session_id', $cartId)->count(),
             'cart_id' => $cartId
-        ], 201)->header('X-Cart-ID', $cartId);
+        ]);
+        
+        // Set cookies
+        $minutes = 60 * 24 * 30; // 30 days
+        $response->withCookie(cookie('cart_id', $cartId, $minutes));
+              
+        
+        return $response;
     }
 }
