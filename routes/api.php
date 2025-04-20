@@ -31,8 +31,9 @@ require __DIR__.'/api/auth.php';
 Route::apiResource('/categories', CategoryController::class);
 //Route::apiResource('/products', ProductController::class);
 
-Route::get("/products/{id}",[ProductController::class,'show']);
+Route::get("/products/{product}",[ProductController::class,'show']);
 Route::get("/products",[ProductController::class,'index']);
+Route::get("/new-arrivals-products", [ProductController::class, 'newArrivals']);
 
 Route::post("checkout",[CheckoutController::class,'store'])->middleware('auth:sanctum');
 Route::get("orders/{id}",[OrderController::class,'show'])->middleware('auth:sanctum');

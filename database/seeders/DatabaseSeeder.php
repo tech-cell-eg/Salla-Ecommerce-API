@@ -1,5 +1,4 @@
-<?php
-
+<?php 
 namespace Database\Seeders;
 
 use App\Models\Attribute;
@@ -52,7 +51,7 @@ class DatabaseSeeder extends Seeder
         // Re-enable foreign key checks
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
-        // Seed Tags (create all 30 unique tags from TagFactory's $tagNames)
+        // Seed Tags
         $tagNames = [
             'electronics', 'fashion', 'home', 'sports', 'outdoor', 'beauty', 'tech', 'gaming',
             'fitness', 'travel', 'kitchen', 'books', 'music', 'health', 'toys', 'jewelry',
@@ -69,32 +68,60 @@ class DatabaseSeeder extends Seeder
         }
 
         // Seed Brands
-        Brand::factory()->count(10)->create();
+        Brand::factory()->count(5)->create();
 
-        // Seed Categories with some parent-child relationships
-        Category::factory()->count(5)->create(); // Top-level categories
-        Category::factory()->count(10)->create([
-            'parent' => Category::inRandomOrder()->first()->id,
-        ]); // Subcategories
-
+        // Seed Categories - Manually create them to ensure uniqueness
+        $parentCategories = [
+            ['name' => '2حواسيب محمولة'],
+            ['name' => '2هواتف ذكية'],
+            ['name' => '2ساعات ذكية'],
+        ];
+        
+        $createdParents = [];
+        foreach ($parentCategories as $category) {
+            $createdParents[] = Category::create([
+                'name' => $category['name'],
+                'slug' => \Illuminate\Support\Str::slug($category['name']),
+                'status' => true,
+                'parent' => null,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ])->id;
+        }
+        
+        // Then create child categories
+        $childCategories = [
+            ['name' => '1حواسيب مكتبية', 'parent' => $createdParents[0]],
+            ['name' => '1سماعات أجهزة', 'parent' => $createdParents[1]],
+            ['name' => '1أجهزة ألعاب', 'parent' => $createdParents[2]],
+        ];
+        
+        foreach ($childCategories as $category) {
+            Category::create([
+                'name' => $category['name'],
+                'slug' => \Illuminate\Support\Str::slug($category['name']),
+                'status' => true,
+                'parent' => $category['parent'],
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
         // Seed Attributes and Attribute Values
-        Attribute::factory()->count(8)->create(); // Creates attributes with 2–5 values each
+        Attribute::factory()->count(5)->create(); // Creates attributes with 2–5 values each
 
-        // Seed Products (includes images, details, tags, reviews, variants, and variant attributes)
-        Product::factory()->count(50)->create();
+        // Seed Products
+        Product::factory()->count(5)->create();
 
         // Seed Coupons
-        Coupon::factory()->count(10)->create();
+        Coupon::factory()->count(5)->create();
 
         // Seed Sliders
         Slider::factory()->count(5)->create();
 
         // Seed Features
-        Feature::factory()->count(6)->create();
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        Feature::factory()->count(5)->create();
+
+        // Seed Users and Roles
         $this->call([
             RolePermissionSeeder::class,
             AdminUserSeeder::class,

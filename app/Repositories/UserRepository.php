@@ -11,7 +11,7 @@ class UserRepository implements UserRepositoryInterface
     public function create(array $data): User
     {
         $user= User::create($data);
-        $userRole = Role::where('name','user')->first();
+        $userRole =Role::firstOrCreate(['name' => 'user']);
         $user->assignRole( $userRole);
         return $user;
     }

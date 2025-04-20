@@ -5,21 +5,29 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Tag>
- */
 class TagFactory extends Factory
 {
+    protected static $arabicTags = [
+        'تخفيضات',
+        'جديد',
+        'الأكثر مبيعاً',
+        'مميز',
+        'عروض خاصة',
+        'أجهزة كمبيوتر',
+        'هواتف',
+        'ساعات ذكية',
+        'ملحقات',
+        'ألعاب',
+        'تصوير',
+        'شبكات',
+        'برمجة',
+        'تصميم',
+        'تعليم'
+    ];
+
     public function definition(): array
     {
-        static $tagNames = [
-            'electronics', 'fashion', 'home', 'sports', 'outdoor', 'beauty', 'tech', 'gaming',
-            'fitness', 'travel', 'kitchen', 'books', 'music', 'health', 'toys', 'jewelry',
-            'pets', 'garden', 'office', 'automotive', 'baby', 'crafts', 'food', 'luxury',
-            'vintage', 'eco-friendly', 'trending', 'seasonal', 'sale', 'new-arrival',
-        ];
-
-        $name = $this->faker->randomElement($tagNames);
+        $name = $this->faker->unique()->randomElement(static::$arabicTags);
         return [
             'name' => $name,
             'slug' => Str::slug($name),

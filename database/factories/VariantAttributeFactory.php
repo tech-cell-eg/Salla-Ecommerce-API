@@ -1,14 +1,10 @@
 <?php
-
 namespace Database\Factories;
 
 use App\Models\AttributeValue;
 use App\Models\ProductVariant;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\VariantAttribute>
- */
 class VariantAttributeFactory extends Factory
 {
     public function definition(): array

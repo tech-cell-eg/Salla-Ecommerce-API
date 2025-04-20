@@ -16,11 +16,26 @@ class ProductController extends ApiController
             'message' => 'Products fetched successfully'
         ], 200);
     }
-    public function show(Product $product)
+    public function show($product)
     {
+        $productModel=Product::findOrFail($product);
         return ApiController::successResponse([
-            "data" => new ProductResource($product->load('category', 'images', 'brand', 'variants.variantAttributes', 'details', 'tags', 'reviews')),
+            "data" => new ProductResource( $productModel->load('category', 'images', 'brand', 'variants.variantAttributes', 'details', 'tags', 'reviews')),
             'message' => 'Product fetched successfully'
         ], 200);
+    }
+
+    public function newArrivals()
+    {
+      
+        $products = Product::where('is_new_arrival', true)
+            ->with(['images', 'brand', 'category']) // eager load relationships
+            ->latest('created_at')
+            ->get();
+
+        return response()->json([
+            'success' => true,
+           "data" => ProductResource::collection($products),
+        ]);
     }
 }

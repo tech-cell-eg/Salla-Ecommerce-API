@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Product extends Model
 {
     use HasFactory, Sluggable, FilterTrait;
-    protected $fillable = ['name', 'description', 'price', 'category_id','product_id'];
+    protected $fillable = ['name', 'description', 'price', 'category_id','product_id','is_new_arrival'];
     protected $casts = [
         'status' => 'boolean',
         'has_variants' => 'boolean',
