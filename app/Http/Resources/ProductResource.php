@@ -17,7 +17,7 @@ class ProductResource extends JsonResource
         return [
             'id2' => $this->id,
             'name' => $this->name,
-            'slug' => $this->slug,
+
             'description' => $this->description,
             'price' => $this->price,
             'remaining_quantity' => $this->remaining_quantity,
@@ -35,13 +35,12 @@ class ProductResource extends JsonResource
             'manage_stock' => $this->manage_stock,
             'available_in_stock' => $this->available_in_stock,
             'status' => $this->status,
-            'tags' => TagResource::collection($this->whenLoaded('tags')),
+          
             'category' => new CategoryResource($this->whenLoaded('category')),
             'brand' => new BrandResource($this->whenLoaded('brand')),
             'images' => ProductImageResource::collection($this->whenLoaded('images')),
-            'variants' => ProductVariantResource::collection($this->whenLoaded('variants')),
-            'details' => ProductDetailResource::collection($this->whenLoaded('details')),
-            'relatedProducts' => ProductResource::collection($this->relatedProducts()),
+           
+           
         ];
     }
 }

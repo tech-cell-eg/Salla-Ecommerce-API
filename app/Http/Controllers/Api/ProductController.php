@@ -12,15 +12,16 @@ class ProductController extends ApiController
     public function index(ProductFilter $filters)
     {
         return ApiController::successResponse([
-            "data" => ProductResource::collection(Product::with('category')->latest()->filter($filters)->get()),
+            "data" => ProductResource::collection(Product::with('category', 'images', 'brand','reviews')->latest()->filter($filters)->get()),
             'message' => 'Products fetched successfully'
         ], 200);
     }
     public function show($product)
     {
-        $productModel=Product::findOrFail($product);
+       
+        $productModel=Product::with('category', 'images', 'brand','reviews')->findOrFail($product);
         return ApiController::successResponse([
-            "data" => new ProductResource( $productModel->load('category', 'images', 'brand', 'variants.variantAttributes', 'details', 'tags', 'reviews')),
+            "data" => new ProductResource( $productModel),
             'message' => 'Product fetched successfully'
         ], 200);
     }
@@ -29,7 +30,7 @@ class ProductController extends ApiController
     {
       
         $products = Product::where('is_new_arrival', true)
-            ->with(['images', 'brand', 'category']) // eager load relationships
+            ->with(['images', 'brand', 'category','reviews']) // eager load relationships
             ->latest('created_at')
             ->get();
 
